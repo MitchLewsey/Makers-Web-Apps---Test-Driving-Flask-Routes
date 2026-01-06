@@ -16,6 +16,40 @@ app = Flask(__name__)
 def get_emoji():
     return ":)"
 
+@app.route('/hello', methods=['GET'])
+def hello():
+    name = request.args['name'] # The value is 'David'
+
+    # Send back a friendly greeting with the name
+    return f"Hello {name}!"
+
+@app.route('/goodbye', methods=['POST'])
+def goodbye():
+    name = request.form['name'] # The value is 'Alice'
+
+    # Send back a fond farewell with the name
+    return f"Goodbye {name}!"
+
+@app.route('/submit', methods=['POST'])
+def send_message():
+    name = request.form['name']
+    message = request.form['message']
+
+    return f"Thanks {name}, you sent this message: {message}"
+
+@app.route('/wave', methods=['GET'])
+def wave():
+    name = request.args['name']
+
+    return f"I am waving at {name}"
+
+@app.route('/count_vowels', methods=['POST'])
+def count_vowels():
+    text = request.form['text']
+    vowels_in_text = [i for i in text if i in 'aeiou']
+    return f'There are {len(vowels_in_text)} vowels in "{text}"'
+
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
 from example_routes import apply_example_routes

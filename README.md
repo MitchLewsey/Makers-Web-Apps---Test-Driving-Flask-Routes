@@ -34,10 +34,10 @@ There are two videos to support:
 # Read below if you see an error with `python_full_version`
 
 # Create a test and development database
-(web-application-starter-venv); createdb YOUR_PROJECT_NAME
-(web-application-starter-venv); createdb YOUR_PROJECT_NAME_test
+(web-application-starter-venv); createdb web_apps_module_1
+(web-application-starter-venv); createdb web_apps_module_1_test
 
-# Open lib/database_connection.py and change the database name to YOUR_PROJECT_NAME
+# Open lib/database_connection.py and change the database name to web_apps_module_1
 (web-application-starter-venv); open lib/database_connection.py
 
 # Seed the development database
