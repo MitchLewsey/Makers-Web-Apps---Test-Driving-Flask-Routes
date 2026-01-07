@@ -16,9 +16,9 @@ And: I send "eee" as the body parameter text
 Then: I should get a 200 response with 3 in the message
 """
 def test_post_count_vowels_eee(web_client):
-    response = web_client.post('/count_vowels', data={'text': 'eee'})
+    response = web_client.post("/count_vowels", data={"text": "eee"})
     assert response.status_code == 200
-    assert response.data.decode('utf-8') == 'There are 3 vowels in "eee"'
+    assert response.data.decode("utf-8") == "There are 3 vowels in 'eee'"
 
 """
 When: I make a POST request to /count_vowels
@@ -26,9 +26,9 @@ And: I send "eunoia" as the body parameter text
 Then: I should get a 200 response with 5 in the message
 """
 def test_post_count_vowels_eunoia(web_client):
-    response = web_client.post('/count_vowels', data={'text': 'eunoia'})
+    response = web_client.post("/count_vowels", data={"text": "eunoia"})
     assert response.status_code == 200
-    assert response.data.decode('utf-8') == 'There are 5 vowels in "eunoia"'
+    assert response.data.decode("utf-8") == "There are 5 vowels in 'eunoia'"
 
 """
 When: I make a POST request to /count_vowels
@@ -36,9 +36,9 @@ And: I send "mercurial" as the body parameter text
 Then: I should get a 200 response with 4 in the message
 """
 def test_post_count_vowels_mercurial(web_client):
-    response = web_client.post('/count_vowels', data={'text': 'mercurial'})
+    response = web_client.post("/count_vowels", data={"text": "mercurial"})
     assert response.status_code == 200
-    assert response.data.decode('utf-8') == 'There are 4 vowels in "mercurial"'
+    assert response.data.decode("utf-8") == "There are 4 vowels in 'mercurial'"
 
 """
 POST /sort_names
@@ -48,9 +48,9 @@ POST /sort_names
         "Kathleen,Mitch,Sarah,Tariq,Will"
 """
 def test_post_sort_names_with_list_of_names(web_client):
-    response = web_client.post('/sort-names', data={'names': 'Sarah,Kathleen,Mitch,Tariq,Will'})
+    response = web_client.post("/sort-names", data={"names": "Sarah,Kathleen,Mitch,Tariq,Will"})
     assert response.status_code == 200
-    assert response.data.decode('utf-8') == 'Kathleen,Mitch,Sarah,Tariq,Will'
+    assert response.data.decode("utf-8") == "Kathleen,Mitch,Sarah,Tariq,Will"
 
 """
 POST /sort_names
@@ -77,5 +77,38 @@ def test_post_sort_names_no_names_provided(web_client):
     response = web_client.post("/sort-names")
     assert response.status_code == 400
     assert response.data.decode("utf-8") == "No names submitted"
+
+"""
+POST /add-names
+    Parameters: 
+        names: Sarah,Kathleen,Mitch,Tariq,Will
+        added_name: Charlotte
+    Expected response (200 OK):
+    "Charlotte, Kathleen, Mitch, Sarah, Tariq, Will"
+"""
+
+def test_get_add_name_given_name(web_client):
+    response = web_client.get("/add-name?names=Sarah,Kathleen,Mitch,Tariq,Will&added_name=Charlotte")
+    assert response.status_code == 200
+    assert response.data.decode("utf-8") == "Charlotte, Kathleen, Mitch, Sarah, Tariq, Will"
+
+
+"""
+POST /add-names
+    Parameters: 
+        names: Sarah,Kathleen,Mitch,Tariq,Will
+    Expected response (400 BAD REQUEST):
+    "No names to add"
+"""
+
+def test_get_add_name_no_given_name(web_client):
+    response = web_client.get("/add-name?names=Sarah,Kathleen,Mitch,Tariq,Will")
+    assert response.status_code == 400
+    assert response.data.decode("utf-8") == "No names to add"
+
+def test_get_add_name_given_multiple_names(web_client):
+    response = web_client.get("/add-name?names=Sarah,Kathleen,Mitch,Tariq,Will&added_name=Charlotte,Paul")
+    assert response.status_code == 200
+    assert response.data.decode("utf-8") == "Charlotte, Kathleen, Mitch, Paul, Sarah, Tariq, Will"
 
 # === End Example Code ===
