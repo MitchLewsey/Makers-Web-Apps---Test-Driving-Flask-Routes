@@ -49,6 +49,13 @@ def count_vowels():
     vowels_in_text = [i for i in text if i in 'aeiou']
     return f'There are {len(vowels_in_text)} vowels in "{text}"'
 
+@app.route('/sort-names', methods=['POST'])
+def sort_names():
+    if "names" not in request.form:
+        return "No names submitted", 400
+    names = request.form['names']
+    return ','.join(sorted(names.split(',')))
+
 
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
